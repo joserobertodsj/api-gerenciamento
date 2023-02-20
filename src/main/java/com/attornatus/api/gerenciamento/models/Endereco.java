@@ -15,6 +15,7 @@ import lombok.Setter;
 @Table()
 public class Endereco {
 
+    private Long idEndereco;
     private String logradouro;
     private String cep;
     private String numero;
