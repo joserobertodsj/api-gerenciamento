@@ -1,10 +1,13 @@
 package com.attornatus.api.gerenciamento.services.impl;
 
+import com.attornatus.api.gerenciamento.models.Pessoa;
 import com.attornatus.api.gerenciamento.models.dtos.requests.PessoaRequestDto;
 import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDto;
 import com.attornatus.api.gerenciamento.models.dtos.responses.PessoaResponseDto;
 import com.attornatus.api.gerenciamento.repositories.PessoaRepository;
 import com.attornatus.api.gerenciamento.services.PessoaService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,8 @@ import java.util.List;
 @Service
 public class PessoaServiceImpl implements PessoaService {
 
+    @Autowired
+    private ModelMapper modelMapper;
     private PessoaRepository pessoaRepository;
 
     public PessoaServiceImpl(PessoaRepository pessoaRepository) {
@@ -25,7 +30,9 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaResponseDto salvar(PessoaRequestDto pessoaRequestDto) {
-        return null;
+
+        Pessoa pessoa = pessoaRepository.save(modelMapper.map(pessoaRequestDto, Pessoa.class));
+        return modelMapper.map(pessoa, PessoaResponseDto.class);
     }
 
     @Override
