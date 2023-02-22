@@ -1,18 +1,22 @@
 package com.attornatus.api.gerenciamento.models.dtos.responses;
 
-import com.attornatus.api.gerenciamento.models.Pessoa;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record EnderecoResponseDto(
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class EnderecoResponseDto{
 
-        Long idEndereco,
-        String logradouro,
-        String cep,
-        String numero,
-        String cidade,
-        Pessoa pessoa,
-        Boolean enderecoPrincipal
+        private Long idEndereco;
+        private String logradouro;
+        private String cep;
+        private String numero;
+        private String cidade;
+        private Boolean enderecoPrincipa;
 
-
-
-) {
 }
+
