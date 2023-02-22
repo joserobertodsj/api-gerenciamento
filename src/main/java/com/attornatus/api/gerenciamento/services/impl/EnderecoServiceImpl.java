@@ -4,17 +4,16 @@ import com.attornatus.api.gerenciamento.models.dtos.requests.EnderecoRequestDto;
 import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDto;
 import com.attornatus.api.gerenciamento.repositories.EnderecoRepository;
 import com.attornatus.api.gerenciamento.services.EnderecoService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class EnderecoServiceImpl implements EnderecoService {
 
 
-    private EnderecoRepository enderecoRepository;
+    private final EnderecoRepository enderecoRepository;
 
-    public EnderecoServiceImpl(EnderecoRepository enderecoRepository) {
-        this.enderecoRepository = enderecoRepository;
-    }
 
     //------------------------------------------------------------------------------------------------------------------
 

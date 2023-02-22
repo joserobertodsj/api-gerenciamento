@@ -6,8 +6,8 @@ import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDt
 import com.attornatus.api.gerenciamento.models.dtos.responses.PessoaResponseDto;
 import com.attornatus.api.gerenciamento.repositories.PessoaRepository;
 import com.attornatus.api.gerenciamento.services.PessoaService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PessoaServiceImpl implements PessoaService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-    private PessoaRepository pessoaRepository;
 
-    public PessoaServiceImpl(PessoaRepository pessoaRepository) {
-        this.pessoaRepository = pessoaRepository;
-    }
+    private final ModelMapper modelMapper;
+    private final PessoaRepository pessoaRepository;
+
+
 
 
     //------------------------------------------------------------------------------------------------------------------
