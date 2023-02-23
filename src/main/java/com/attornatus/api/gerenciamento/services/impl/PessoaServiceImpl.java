@@ -1,5 +1,6 @@
 package com.attornatus.api.gerenciamento.services.impl;
 
+import com.attornatus.api.gerenciamento.exceptions.ModelException;
 import com.attornatus.api.gerenciamento.models.Pessoa;
 import com.attornatus.api.gerenciamento.models.dtos.requests.PessoaRequestDto;
 import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDto;
@@ -36,7 +37,9 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public PessoaResponseDto buscarPorId(Long idPessoa) {
-        return null;
+        return modelMapper.map(pessoaRepository.findById(idPessoa)
+                .orElseThrow(ModelException::new), PessoaResponseDto.class);
+
     }
 
     @Override
