@@ -6,10 +6,7 @@ import com.attornatus.api.gerenciamento.services.impl.PessoaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/pessoas")
@@ -27,5 +24,11 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<PessoaResponseDto> salvarPessoa (@RequestBody PessoaRequestDto pessoaRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.salvar(pessoaRequestDto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaResponseDto> buscarPorId(@PathVariable(value = "id") Long idPessoa){
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.buscarPorId(idPessoa));
+
     }
 }
