@@ -44,16 +44,28 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Page<PessoaResponseDto> buscarTodos(Pageable pageable) {
-        return null;
+        return pessoaRepository.findAll(pageable).map(pessoa -> modelMapper.map(pessoa, PessoaResponseDto.class));
     }
 
     @Override
     public PessoaResponseDto atualizar(Long idPessoa, PessoaRequestDto pessoaRequestDto) {
-        return null;
+        Pessoa pessoa = modelMapper.map(buscarPorId(idPessoa), Pessoa.class);
+        atualizarAtributos(pessoaRequestDto, pessoa);
+        pessoaRepository.save(pessoa);
+        return modelMapper.map(pessoa, PessoaResponseDto.class);
+
+
     }
 
     @Override
     public List<EnderecoResponseDto> buscarTodosEnderecos(Long idPessoa) {
         return null;
     }
+
+    private void atualizarAtributos(PessoaRequestDto pessoaRequestDto, Pessoa pessoa){
+        pessoa.setNome(pessoaRequestDto.getNome());
+        pessoa.setDataDeAniversario(pessoaRequestDto.getDataDeAniversario());
+    }
 }
+
+
