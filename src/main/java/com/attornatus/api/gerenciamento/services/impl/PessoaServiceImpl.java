@@ -38,7 +38,7 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public PessoaResponseDto buscarPorId(Long idPessoa) {
         return modelMapper.map(pessoaRepository.findById(idPessoa)
-                .orElseThrow(ModelException::new), PessoaResponseDto.class);
+                .orElseThrow(()->new ModelException(idPessoa)), PessoaResponseDto.class);
 
     }
 
@@ -59,7 +59,8 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public List<EnderecoResponseDto> buscarTodosEnderecos(Long idPessoa) {
-        return null;
+
+        return buscarPorId(idPessoa).getEnderecos().stream().toList();
     }
 
     private void atualizarAtributos(PessoaRequestDto pessoaRequestDto, Pessoa pessoa){
