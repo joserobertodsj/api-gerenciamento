@@ -1,8 +1,13 @@
 package com.attornatus.api.gerenciamento.controllers;
 
+import com.attornatus.api.gerenciamento.models.dtos.requests.EnderecoRequestDto;
 import com.attornatus.api.gerenciamento.models.dtos.requests.PessoaRequestDto;
+import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDto;
 import com.attornatus.api.gerenciamento.models.dtos.responses.PessoaResponseDto;
+import com.attornatus.api.gerenciamento.services.impl.EnderecoServiceImpl;
 import com.attornatus.api.gerenciamento.services.impl.PessoaServiceImpl;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/pessoas")
+@AllArgsConstructor
 public class PessoaController {
 
-    private PessoaServiceImpl pessoaService;
+    private final PessoaServiceImpl pessoaService;
+    private final EnderecoServiceImpl enderecoService;
 
     @Autowired
-    public PessoaController(PessoaServiceImpl pessoaService) {
-        this.pessoaService = pessoaService;
-    }
+    private ModelMapper modelMapper;
+
+
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -43,5 +50,10 @@ public class PessoaController {
     public ResponseEntity<PessoaResponseDto> atualizarPessoa(@PathVariable(value = "id") Long id, @RequestBody PessoaRequestDto pessoaRequestDto){
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(pessoaService.atualizar(id, pessoaRequestDto));
 
+    }
+
+    @PostMapping("{idPessoa}/enderecos")
+    public ResponseEntity<EnderecoResponseDto> salvarEndereco(@PathVariable Long idPessoa, @RequestBody EnderecoRequestDto enderecoRequestDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.salvarEndereco(idPessoa, enderecoRequestDto));
     }
 }
