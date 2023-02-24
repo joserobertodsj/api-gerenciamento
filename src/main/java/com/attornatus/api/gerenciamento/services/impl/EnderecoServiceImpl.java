@@ -26,7 +26,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     //------------------------------------------------------------------------------------------------------------------
 
     public EnderecoResponseDto buscarPorId(Long idEndereco){
-        return modelMapper.map(enderecoRepository.findById(idEndereco).orElseThrow(ModelException::new), EnderecoResponseDto.class);
+        return modelMapper.map(enderecoRepository.findById(idEndereco).orElseThrow(() -> new ModelException(idEndereco)), EnderecoResponseDto.class);
     }
 
     @Override
@@ -41,16 +41,16 @@ public class EnderecoServiceImpl implements EnderecoService {
     }
 
 
-    public Endereco atualizarEnderecoPrincipal(Long idEndereco){
-        var endereco = modelMapper.map(enderecoRepository.findById(idEndereco), Endereco.class);
+    public EnderecoResponseDto atualizarEnderecoPrincipal(Long idEndereco){
+        var endereco = enderecoRepository.findById(idEndereco).orElseThrow(() -> new ModelException(idEndereco));
 
         endereco.getPessoa().getEnderecos().forEach(e ->{
             e.setEnderecoPrincipal(false);
             enderecoRepository.save(e);
         });
         endereco.setEnderecoPrincipal(true);
-
-        return enderecoRepository.save(endereco);
+        enderecoRepository.save(modelMapper.map(endereco, Endereco.class));
+        return modelMapper.map(endereco, EnderecoResponseDto.class);
     }
 
 
