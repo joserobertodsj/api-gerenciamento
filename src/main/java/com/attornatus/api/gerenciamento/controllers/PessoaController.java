@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/pessoas")
 @AllArgsConstructor
@@ -56,4 +58,15 @@ public class PessoaController {
     public ResponseEntity<EnderecoResponseDto> salvarEndereco(@PathVariable Long idPessoa, @RequestBody EnderecoRequestDto enderecoRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.salvarEndereco(idPessoa, enderecoRequestDto));
     }
+
+    @PatchMapping("/endereco-principal/{idEndereco}")
+    public ResponseEntity<EnderecoResponseDto> atualizarEnderecoPrincipal(@PathVariable Long idEndereco){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(enderecoService.atualizarEnderecoPrincipal(idEndereco));
+    }
+
+    @GetMapping("{idPessoa}/enderecos")
+    public ResponseEntity<List<EnderecoResponseDto>> buscarTodosEnderecos(@PathVariable Long idPessoa){
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.buscarTodosEnderecos(idPessoa));
+    }
+
 }
