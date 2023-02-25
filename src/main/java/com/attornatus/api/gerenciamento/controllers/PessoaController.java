@@ -6,6 +6,7 @@ import com.attornatus.api.gerenciamento.models.dtos.responses.EnderecoResponseDt
 import com.attornatus.api.gerenciamento.models.dtos.responses.PessoaResponseDto;
 import com.attornatus.api.gerenciamento.services.impl.EnderecoServiceImpl;
 import com.attornatus.api.gerenciamento.services.impl.PessoaServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class PessoaController {
     //------------------------------------------------------------------------------------------------------------------
 
     @PostMapping
-    public ResponseEntity<PessoaResponseDto> salvarPessoa (@RequestBody PessoaRequestDto pessoaRequestDto){
+    public ResponseEntity<PessoaResponseDto> salvarPessoa (@RequestBody @Valid PessoaRequestDto pessoaRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaService.salvar(pessoaRequestDto));
     }
 
@@ -49,13 +50,13 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaResponseDto> atualizarPessoa(@PathVariable(value = "id") Long id, @RequestBody PessoaRequestDto pessoaRequestDto){
+    public ResponseEntity<PessoaResponseDto> atualizarPessoa(@PathVariable(value = "id") Long id, @RequestBody @Valid PessoaRequestDto pessoaRequestDto){
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(pessoaService.atualizar(id, pessoaRequestDto));
 
     }
 
     @PostMapping("{idPessoa}/enderecos")
-    public ResponseEntity<EnderecoResponseDto> salvarEndereco(@PathVariable Long idPessoa, @RequestBody EnderecoRequestDto enderecoRequestDto){
+    public ResponseEntity<EnderecoResponseDto> salvarEndereco(@PathVariable Long idPessoa, @RequestBody @Valid EnderecoRequestDto enderecoRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.salvarEndereco(idPessoa, enderecoRequestDto));
     }
 
