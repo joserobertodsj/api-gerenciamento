@@ -64,8 +64,14 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     private void atualizarAtributos(PessoaRequestDto pessoaRequestDto, Pessoa pessoa){
-        pessoa.setNome(pessoaRequestDto.getNome());
-        pessoa.setDataDeAniversario(pessoaRequestDto.getDataDeAniversario());
+        if (pessoaRequestDto.getNome() != null){
+            pessoa.setNome(pessoaRequestDto.getNome());
+
+        }
+        if (pessoaRequestDto.getDataDeAniversario() != null){
+            pessoa.setDataDeAniversario(pessoaRequestDto.getDataDeAniversario());
+        }
+
     }
 }
 
